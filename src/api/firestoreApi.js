@@ -5,8 +5,8 @@ import {
   onSnapshot,
   updateDoc,
   doc,
-  query,
   where,
+  query,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -77,8 +77,8 @@ export const getSingleStatus = (setAllStatuses, id) => {
   });
 };
 
-export const getSingleUser = (setCurrentUser, email) => {
-  const singleUserQuery = query(userRef, where("email", "==", email));
+export const getSingleUser = (setCurrentUser, userEmail) => {
+  const singleUserQuery = query(userRef, where("email", "==", userEmail));
   onSnapshot(singleUserQuery, (response) => {
     setCurrentUser(
       response.docs.map((docs) => {

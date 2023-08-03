@@ -24,7 +24,8 @@ const PostStatus = ({ currentUser }) => {
       timeStamp: getcurrentTimeStamp("LLL"),
       userEmail: userEmail,
       userName: currentUser.name,
-      postID:getUniqueID()
+      postID: getUniqueID(),
+      userID: currentUser.userID,
     };
     await postStatus(object);
     await setModalOpen(false);
@@ -48,7 +49,7 @@ const PostStatus = ({ currentUser }) => {
         sendStatus={sendStatus}
       />
       <div>
-      {allStatuses.map((posts) => {
+        {allStatuses.map((posts) => {
           return (
             <div key={posts.id}>
               <PostCard posts={posts} />

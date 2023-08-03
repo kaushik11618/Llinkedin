@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 export const PostCard = ({ posts }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="posts-card">
       <p
         className="name"
         onClick={() =>
           navigate("/profile", {
-            state: { id: posts?.userID, email: posts?.userEmail },
+            state: { id: posts?.userID, email: posts.userEmail },
           })
         }
       >
