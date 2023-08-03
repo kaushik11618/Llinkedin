@@ -23,7 +23,9 @@ const RegisterComponent = () => {
       <img src="linkedinlogo.png" className="linkedinLogo" alt="" />
 
       <div className="login-wrapper-inner">
-        <h1 className="heading">Make the most of your professional life</h1>
+        <h1 className="heading-signin">
+          Make the most of your professional life
+        </h1>
         <div className="auth-inputs">
           <input
             onChange={(event) =>

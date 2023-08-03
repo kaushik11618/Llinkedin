@@ -5,6 +5,8 @@ import {
   onSnapshot,
   updateDoc,
   doc,
+  query,
+  where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -63,4 +65,25 @@ export const editProfile = (userID, payload) => {
     .catch((err) => {
       console.log(err);
     });
+};
+export const getSingleStatus = (setAllStatuses, id) => {
+  const singlePostQuery = query(postsRef, where("userID", "==", id));
+  onSnapshot(singlePostQuery, (response) => {
+    setAllStatuses(
+      response.docs.map((docs) => {
+        return { ...docs.data(), id: docs.id };
+      })
+    );
+  });
+};
+
+export const getSingleUser = (setCurrentUser, email) => {
+  const singleUserQuery = query(userRef, where("email", "==", email));
+  onSnapshot(singleUserQuery, (response) => {
+    setCurrentUser(
+      response.docs.map((docs) => {
+        return { ...docs.data(), id: docs.id };
+      })[0]
+    );
+  });
 };

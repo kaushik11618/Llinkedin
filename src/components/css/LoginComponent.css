@@ -122,3 +122,8 @@
   font-size: 18px;
   margin-left: 10px;
 }
+.heading-signin {
+  font-family: system-ui;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+}

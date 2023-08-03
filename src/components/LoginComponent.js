@@ -26,7 +26,7 @@ const LoginComponent = () => {
     <img src="linkedinlogo.png" className="linkedinLogo"  alt=""/>
 
     <div className="login-wrapper-inner">
-      <h1 className="heading">Sign in</h1>
+      <h1 className="heading-signin">Sign in</h1>
       <p className="sub-heading">Stay updated on your professional world</p>
 
       <div className="auth-inputs">
