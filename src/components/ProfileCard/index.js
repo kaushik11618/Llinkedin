@@ -1,8 +1,10 @@
+import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { getSingleStatus, getSingleUser } from "../../api/firestoreApi.js";
 import { uploadImage as uploadImageAPI } from "../../api/ImageUpload";
+import { FileUploadModal } from "../FileUploadModal/index.js";
 import { PostCard } from "../PostCard.js";
 import "./index.css";
 export const ProfileCard = ({ currentUser, onEdit }) => {
@@ -10,6 +12,7 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
   const [allStatuses, setAllStatuses] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
   const [currentImage, setCurrentImage] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
   };
@@ -36,8 +39,15 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
         </div>
         <div className="profile-info">
           <div>
+            <FileUploadModal
+              setModalOpen={setModalOpen}
+              modalOpen={modalOpen}
+            />
             <img
               className="profile-image"
+              onClick={() => {
+                setModalOpen(true);
+              }}
               src={
                 Object.values(currentProfile).length === 0
                   ? currentUser.imageLink
