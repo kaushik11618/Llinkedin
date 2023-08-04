@@ -11,7 +11,7 @@ const ProfileEdit = ({ currentUser, onEdit }) => {
   };
   const upadateProfileData = async () => {
     await editProfile(currentUser?.userID, editInputs);
-    await onEdit()
+    await onEdit();
   };
   return (
     <div className="profile-card">
@@ -82,6 +82,23 @@ const ProfileEdit = ({ currentUser, onEdit }) => {
           placeholder="Website"
           name="website"
           value={editInputs.website}
+        />
+        <label>About</label>
+        <textarea
+          placeholder="About Me"
+          className="common-textArea"
+          onChange={getInput}
+          rows={5}
+          name="aboutMe"
+          value={editInputs.aboutMe}
+        />
+        <label>Skill</label>
+        <input
+          onChange={getInput}
+          className="common-input"
+          placeholder="Skill"
+          name="skill"
+          value={editInputs.skill}
         />
       </div>
       <div className="save-container">

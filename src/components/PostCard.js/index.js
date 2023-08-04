@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../../api/firestoreApi";
+import { LikeButton } from "../LikeButton";
 import "./index.css";
-export const PostCard = ({ posts }) => {
+export const PostCard = ({ posts, id }) => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState({});
+  useMemo(() => getCurrentUser(setCurrentUser), []);
   return (
-    <div className="posts-card">
+    <div className="posts-card" key={id}>
       <p
         className="name"
         onClick={() =>
@@ -17,6 +21,11 @@ export const PostCard = ({ posts }) => {
       </p>
       <p className="timestamp">{posts.timeStamp}</p>
       <p className="status">{posts.status}</p>
+      <LikeButton
+        userId={currentUser?.userID}
+        postId={posts.id}
+        currentUser={currentUser}
+      />
     </div>
   );
 };

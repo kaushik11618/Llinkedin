@@ -6,7 +6,7 @@ import moment from "moment/moment";
 import { v4 as uuidv4 } from "uuid";
 import "./index.css";
 
-const getcurrentTimeStamp = (timeFormat) => {
+export const getcurrentTimeStamp = (timeFormat) => {
   return moment().format(timeFormat);
 };
 const getUniqueID = () => {

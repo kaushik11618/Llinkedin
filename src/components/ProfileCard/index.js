@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { getSingleStatus, getSingleUser } from "../../api/firestoreApi.js";
+import { uploadImage as uploadImageAPI } from "../../api/ImageUpload";
 import { PostCard } from "../PostCard.js";
-
 import "./index.css";
 export const ProfileCard = ({ currentUser, onEdit }) => {
   let location = useLocation();
   const [allStatuses, setAllStatuses] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
+  const [currentImage, setCurrentImage] = useState({});
+  const getImage = (event) => {
+    setCurrentImage(event.target.files[0]);
+  };
+  const uploadImage = () => {
+    uploadImageAPI(currentImage, currentUser.userID);
+  };
+
   useEffect(() => {
     if (location?.state?.id) {
       getSingleStatus(setAllStatuses, location?.state?.id);
@@ -17,28 +25,79 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
       getSingleUser(setCurrentProfile, location?.state?.email);
     }
   }, [location?.state?.email, location?.state?.id]);
-  console.log(currentProfile);
+
   return (
     <>
       <div className="profile-card">
+        <input type={"file"} onChange={getImage} />
+        <button onClick={uploadImage}>Upload</button>
         <div className="edit-btn">
           <HiOutlinePencil className="edit-icon" onClick={onEdit} />
         </div>
         <div className="profile-info">
           <div>
+            <img
+              className="profile-image"
+              src={
+                Object.values(currentProfile).length === 0
+                  ? currentUser.imageLink
+                  : currentProfile?.imageLink
+              }
+              alt="profile-image"
+            />
             <h3 className="userName">
               {Object.values(currentProfile).length === 0
-                ? currentUser.name
+                ? currentUser?.name
                 : currentProfile?.name}
             </h3>
-            <p className="heading"></p>
-            <p className="location"></p>
+            <p className="heading">
+              {Object.values(currentProfile).length === 0
+                ? currentUser.headline
+                : currentProfile?.headline}
+            </p>
+            <p className="location">
+              {Object.values(currentProfile).length === 0
+                ? `${currentUser.city}, ${currentUser.country} `
+                : `${currentProfile?.city}, ${currentUser.country}`}
+            </p>
+            <a
+              className="website"
+              target="_blank"
+              href={
+                Object.values(currentProfile).length === 0
+                  ? `${currentUser.website}`
+                  : currentProfile?.website
+              }
+            >
+              {Object.values(currentProfile).length === 0
+                ? `${currentUser.website}`
+                : currentProfile?.website}
+            </a>
           </div>
           <div className="right-info">
-            <p className="college"></p>
-            <p className="company"></p>
+            <p className="location">
+              {Object.values(currentProfile).length === 0
+                ? currentUser.college
+                : currentProfile?.college}
+            </p>
+            <p className="location">
+              {Object.values(currentProfile).length === 0
+                ? currentUser.company
+                : currentProfile?.company}
+            </p>
           </div>
         </div>
+        <p className="about-me">
+          {Object.values(currentProfile).length === 0
+            ? currentUser.aboutMe
+            : currentProfile?.aboutMe}
+        </p>
+        <p className="skills">
+          <span className="skill-label">Skills:</span>
+          {Object.values(currentProfile).length === 0
+            ? currentUser.skill
+            : currentProfile?.skill}
+        </p>
       </div>
       <div className="post-status-main">
         {allStatuses.map((posts) => {
