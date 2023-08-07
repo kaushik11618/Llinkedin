@@ -7,6 +7,8 @@ const ModalComponent = ({
   setStatus,
   status,
   sendStatus,
+  isEdit,
+  updateStatus,
 }) => {
   return (
     <div>
@@ -24,12 +26,12 @@ const ModalComponent = ({
         }}
         footer={
           <Button
-            onClick={sendStatus}
+            onClick={isEdit ? updateStatus : sendStatus}
             key="submit"
             type="primary"
             disabled={status.length > 0 ? false : true}
           >
-            Post
+            {isEdit ? "update" : "Post"}
           </Button>
         }
       >

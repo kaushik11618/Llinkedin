@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers, getCurrentUser } from "../../api/firestoreApi";
+import { deletePost, getAllUsers, getCurrentUser } from "../../api/firestoreApi";
 import { LikeButton } from "../LikeButton";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import "./index.css";
@@ -15,10 +15,14 @@ export const PostCard = ({ posts, id, getEditPost }) => {
         <div className="action-container">
           <BsPencil
             className="action-icon"
-            size={25}
+            size={20}
             onClick={() => getEditPost(posts)}
           />
-          <BsTrash className="action-icon" size={25} />
+           <BsTrash
+              size={20}
+              className="action-icon"
+              onClick={() => deletePost(posts.id)}
+            />
         </div>
         <img
           alt="profile-image"

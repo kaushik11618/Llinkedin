@@ -1,16 +1,16 @@
-import { firestore } from "../firebaseConfig";
 import {
-  collection,
   addDoc,
-  onSnapshot,
-  updateDoc,
-  doc,
-  where,
-  query,
+  collection,
   deleteDoc,
+  doc,
+  onSnapshot,
+  query,
   setDoc,
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { firestore } from "../firebaseConfig";
 
 let postsRef = collection(firestore, "posts");
 let userRef = collection(firestore, "users");
@@ -53,18 +53,18 @@ export const postUserData = (object) => {
     });
 };
 
-export const updatePost = (userID, status, postImage) => {
-  let docToUpdate = doc(postsRef, userID);
+export const updatePost = (id, status) => {
+  let docToUpdate = doc(postsRef, id);
   try {
-    updateDoc(docToUpdate, { status, postImage });
+    updateDoc(docToUpdate, { status });
     toast.success("Post has been updated!");
   } catch (err) {
     console.log(err);
   }
 };
 
-export const deletePost = (userID) => {
-  let docToDelete = doc(postsRef, userID);
+export const deletePost = (id) => {
+  let docToDelete = doc(postsRef, id);
   try {
     deleteDoc(docToDelete);
     toast.success("Post has been Deleted!");
