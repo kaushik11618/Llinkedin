@@ -31,7 +31,7 @@ export const LikeButton = ({ userId, postId, currentUser }) => {
   }, [userId, postId]);
   return (
     <div className="like-container">
-      <p>{likesCount} People Like this Post</p>
+      <p>{likesCount}</p>
       <div className="hr-line">
         <hr />
       </div>

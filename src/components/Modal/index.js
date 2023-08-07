@@ -14,8 +14,14 @@ const ModalComponent = ({
         title="Create a Post"
         centered
         open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
+        onOk={() => {
+          setStatus("");
+          setModalOpen(false);
+        }}
+        onCancel={() => {
+          setStatus("");
+          setModalOpen(false);
+        }}
         footer={
           <Button
             onClick={sendStatus}

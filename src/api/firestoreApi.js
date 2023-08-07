@@ -36,12 +36,41 @@ export const getStatus = (setAllStatuses) => {
   });
 };
 
+export const getAllUsers = (setAllUsers) => {
+  onSnapshot(userRef, (response) => {
+    setAllUsers(
+      response.docs.map((docs) => {
+        return { ...docs.data(), id: docs.id };
+      })
+    );
+  });
+};
 export const postUserData = (object) => {
   addDoc(userRef, object)
     .then(() => {})
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const updatePost = (userID, status, postImage) => {
+  let docToUpdate = doc(postsRef, userID);
+  try {
+    updateDoc(docToUpdate, { status, postImage });
+    toast.success("Post has been updated!");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deletePost = (userID) => {
+  let docToDelete = doc(postsRef, userID);
+  try {
+    deleteDoc(docToDelete);
+    toast.success("Post has been Deleted!");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const getCurrentUser = (setCurrentUser) => {
@@ -61,12 +90,9 @@ export const getCurrentUser = (setCurrentUser) => {
 
 export const editProfile = (userID, payload) => {
   if (!userID) {
-    // Check if userID is empty or not provided
     throw new Error("User ID cannot be empty or undefined.");
   }
-
   const userToEdit = doc(userRef, userID);
-
   return updateDoc(userToEdit, payload)
     .then(() => {
       toast.success("Profile has been updated successfully");

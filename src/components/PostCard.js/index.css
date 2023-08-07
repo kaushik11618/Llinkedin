@@ -35,3 +35,27 @@
   cursor: pointer;
   text-decoration: underline;
 }
+.post-image-wrapper {
+  display: flex;
+  padding: 15px;
+  gap: 10px;
+  position: relative;
+}
+.post-image {
+  display: flex;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.action-container {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  display: flex;
+  top: 10px;
+}
+.action-icon {
+  color: #474747;
+  padding: 10px;
+}

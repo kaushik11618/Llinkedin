@@ -31,6 +31,10 @@ const PostStatus = ({ currentUser }) => {
     await setModalOpen(false);
     await setStatus("");
   };
+  const getEditPost = (posts) => {
+    setModalOpen(true);
+    setStatus(posts.status);
+  };
   useEffect(() => {
     getStatus(setAllStatuses);
   }, []);
@@ -52,7 +56,7 @@ const PostStatus = ({ currentUser }) => {
         {allStatuses.map((posts) => {
           return (
             <div key={posts.id}>
-              <PostCard posts={posts} />
+              <PostCard posts={posts} getEditPost={getEditPost} />
             </div>
           );
         })}

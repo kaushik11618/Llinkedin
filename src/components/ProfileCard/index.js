@@ -13,13 +13,19 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
   const [currentProfile, setCurrentProfile] = useState({});
   const [currentImage, setCurrentImage] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState("");
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
   };
   const uploadImage = () => {
-    uploadImageAPI(currentImage, currentUser.userID);
+    uploadImageAPI(
+      currentImage,
+      currentUser.userID,
+      setModalOpen,
+      setProgress,
+      setCurrentImage
+    );
   };
-
   useEffect(() => {
     if (location?.state?.id) {
       getSingleStatus(setAllStatuses, location?.state?.id);
@@ -32,16 +38,18 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
   return (
     <>
       <div className="profile-card">
-        <input type={"file"} onChange={getImage} />
-        <button onClick={uploadImage}>Upload</button>
         <div className="edit-btn">
           <HiOutlinePencil className="edit-icon" onClick={onEdit} />
         </div>
         <div className="profile-info">
           <div>
             <FileUploadModal
-              setModalOpen={setModalOpen}
+              getImage={getImage}
+              uploadImage={uploadImage}
               modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+              currentImage={currentImage}
+              progress={progress}
             />
             <img
               className="profile-image"
