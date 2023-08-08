@@ -1,6 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deletePost, getAllUsers, getCurrentUser } from "../../api/firestoreApi";
+import {
+  deletePost,
+  getAllUsers,
+  getConnections,
+  getCurrentUser,
+} from "../../api/firestoreApi";
 import { LikeButton } from "../LikeButton";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import "./index.css";
@@ -8,8 +13,12 @@ export const PostCard = ({ posts, id, getEditPost }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
   useMemo(() => getCurrentUser(setCurrentUser), getAllUsers(setAllUsers), []);
-  return (
+  useEffect(() => {
+    getConnections(currentUser.userID, posts.userID, setIsConnected);
+  }, [currentUser.userID, posts.userID]);
+  return isConnected ? (
     <div className="posts-card" key={id}>
       <div className="post-image-wrapper">
         <div className="action-container">
@@ -18,11 +27,11 @@ export const PostCard = ({ posts, id, getEditPost }) => {
             size={20}
             onClick={() => getEditPost(posts)}
           />
-           <BsTrash
-              size={20}
-              className="action-icon"
-              onClick={() => deletePost(posts.id)}
-            />
+          <BsTrash
+            size={20}
+            className="action-icon"
+            onClick={() => deletePost(posts.id)}
+          />
         </div>
         <img
           alt="profile-image"
@@ -40,7 +49,7 @@ export const PostCard = ({ posts, id, getEditPost }) => {
               })
             }
           >
-            {posts.userName}
+            {allUsers.filter((user) => user.userID === posts.userID)[0]?.name}
           </p>
           <p className="timestamp">{posts.timeStamp}</p>
         </div>
@@ -52,5 +61,7 @@ export const PostCard = ({ posts, id, getEditPost }) => {
         currentUser={currentUser}
       />
     </div>
+  ) : (
+    <></>
   );
 };

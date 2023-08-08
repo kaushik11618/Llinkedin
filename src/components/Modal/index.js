@@ -1,5 +1,6 @@
 import { Button, Modal } from "antd";
 import React from "react";
+import { AiOutlinePicture } from "react-icons/ai";
 import "./index.css";
 const ModalComponent = ({
   modalOpen,
@@ -35,14 +36,18 @@ const ModalComponent = ({
           </Button>
         }
       >
-        <input
+        <textarea
           className="modal-input"
           placeholder="what do you want to talk about?"
           onChange={(event) => {
             setStatus(event.target.value);
           }}
           value={status}
-        ></input>
+        />
+        <label htmlFor="pic-upload">
+          <AiOutlinePicture size={30} className="picture-icon" />
+        </label>
+        <input type="file" id="pic-upload" hidden />
       </Modal>
     </div>
   );

@@ -1,0 +1,13 @@
+.connections-main{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    margin: 30px;
+    border: 1px solid #bbbbbb;
+    background-color: white;
+    border-radius: 10px;
+}

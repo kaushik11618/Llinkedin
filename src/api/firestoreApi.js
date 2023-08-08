@@ -15,6 +15,8 @@ import { firestore } from "../firebaseConfig";
 let postsRef = collection(firestore, "posts");
 let userRef = collection(firestore, "users");
 let likeRef = collection(firestore, "likes");
+let connectionRef = collection(firestore, "connections");
+
 let commentsRef = collection(firestore, "comments");
 export const postStatus = (object) => {
   addDoc(postsRef, object)
@@ -176,6 +178,37 @@ export const getComments = (postId, setComments) => {
       });
 
       setComments(comments);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const addConnection = (userId, targetId) => {
+  try {
+    let connectionToAdd = doc(connectionRef, `${userId}_${targetId}`);
+
+    setDoc(connectionToAdd, { userId, targetId });
+
+    toast.success("Connection Added!");
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getConnections = (userId, targetId, setIsConnected) => {
+  try {
+    let connectionsQuery = query(
+      connectionRef,
+      where("targetId", "==", targetId)
+    );
+
+    onSnapshot(connectionsQuery, (response) => {
+      let connections = response.docs.map((doc) => doc.data());
+
+      const isConnected = connections.some(
+        (connection) => connection.userId === userId
+      );
+
+      setIsConnected(isConnected);
     });
   } catch (err) {
     console.log(err);
