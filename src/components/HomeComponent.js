@@ -1,10 +1,16 @@
 import React from "react";
+import { LeftComponent } from "./HomeComponent/LeftComponent";
+import { RightComponent } from "./HomeComponent/RightComponent";
 import PostStatus from "./PostUpadate";
 
-export const HomeComponent = ({currentUser}) => {
+export const HomeComponent = ({ currentUser }) => {
   return (
     <div>
-      <PostStatus currentUser={currentUser} />
+      <div className="home-layout">
+        <LeftComponent currentUser={currentUser} />
+        <PostStatus currentUser={currentUser} />
+        <RightComponent currentUser={currentUser} />
+      </div>
     </div>
   );
 };

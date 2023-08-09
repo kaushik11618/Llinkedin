@@ -4,6 +4,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { getSingleStatus, getSingleUser } from "../../api/firestoreApi.js";
 import { uploadImage as uploadImageAPI } from "../../api/ImageUpload";
+import { uploadBackGroundImage as uploadBackGroundImageAPI } from "../../api/ImageUpload";
 import { FileUploadModal } from "../FileUploadModal/index.js";
 import { PostCard } from "../PostCard.js";
 import "./index.css";
@@ -26,6 +27,16 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
       setCurrentImage
     );
   };
+  const uploadBackGroundImage = () => {
+    uploadBackGroundImageAPI(
+      currentImage,
+      currentUser.userID,
+      setModalOpen,
+      setProgress,
+      setCurrentImage
+    );
+    console.log("hello");
+  };
   useEffect(() => {
     if (location?.state?.id) {
       getSingleStatus(setAllStatuses, location?.state?.id);
@@ -41,6 +52,26 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
         <div className="edit-btn">
           <HiOutlinePencil className="edit-icon" onClick={onEdit} />
         </div>
+        <FileUploadModal
+          getImage={getImage}
+          uploadBackGroundImage={uploadBackGroundImage}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          currentImage={currentImage}
+          progress={progress}
+        />
+        <img
+          className="background-image"
+          onClick={() => {
+            setModalOpen(true);
+          }}
+          src={
+            Object.values(currentProfile).length === 0
+              ? currentUser.imageLink
+              : currentProfile?.imageLink
+          }
+          alt=""
+        />
         <div className="profile-info">
           <div>
             <FileUploadModal

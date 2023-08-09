@@ -127,3 +127,8 @@
   font-weight: 500;
   color: rgba(0, 0, 0, 0.9);
 }
+.home-layout {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;
+}

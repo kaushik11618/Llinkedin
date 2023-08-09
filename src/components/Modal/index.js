@@ -1,5 +1,6 @@
-import { Button, Modal } from "antd";
+import { Button, Modal, Progress } from "antd";
 import React from "react";
+import { useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
 import "./index.css";
 const ModalComponent = ({
@@ -10,7 +11,13 @@ const ModalComponent = ({
   sendStatus,
   isEdit,
   updateStatus,
+  uploadPostImage,
+  setPostImage,
+  postImage,
+  setCurrentPost,
+  currentPost,
 }) => {
+  const [progress, setProgress] = useState(0);
   return (
     <div>
       <Modal
@@ -20,10 +27,14 @@ const ModalComponent = ({
         onOk={() => {
           setStatus("");
           setModalOpen(false);
+          setPostImage("");
+          setCurrentPost({});
         }}
         onCancel={() => {
           setStatus("");
           setModalOpen(false);
+          setPostImage("");
+          setCurrentPost({});
         }}
         footer={
           <Button
@@ -36,18 +47,42 @@ const ModalComponent = ({
           </Button>
         }
       >
-        <textarea
-          className="modal-input"
-          placeholder="what do you want to talk about?"
-          onChange={(event) => {
-            setStatus(event.target.value);
-          }}
-          value={status}
-        />
+        <div className="posts-body">
+          <textarea
+            className="modal-input"
+            placeholder="what do you want to talk about?"
+            onChange={(event) => {
+              setStatus(event.target.value);
+            }}
+            value={status}
+          />
+          {progress === 0 || progress === 100 ? (
+            <></>
+          ) : (
+            <div className="progress-bar">
+              <Progress type="circle" percent={progress} />
+            </div>
+          )}
+          {postImage?.length > 0 || currentPost?.postImage?.length ? (
+            <img
+              src={postImage || currentPost?.postImage}
+              className="preview-image"
+            />
+          ) : (
+            <></>
+          )}
+        </div>
         <label htmlFor="pic-upload">
           <AiOutlinePicture size={30} className="picture-icon" />
         </label>
-        <input type="file" id="pic-upload" hidden />
+        <input
+          type="file"
+          id="pic-upload"
+          hidden
+          onChange={(event) =>
+            uploadPostImage(event.target.files[0], setPostImage, setProgress)
+          }
+        />
       </Modal>
     </div>
   );

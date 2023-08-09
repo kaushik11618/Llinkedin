@@ -9,16 +9,18 @@ import {
 import { LikeButton } from "../LikeButton";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import "./index.css";
+import Modal from "antd/es/modal/Modal";
 export const PostCard = ({ posts, id, getEditPost }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [imageModal, setImageModal] = useState(false);
   useMemo(() => getCurrentUser(setCurrentUser), getAllUsers(setAllUsers), []);
   useEffect(() => {
     getConnections(currentUser.userID, posts.userID, setIsConnected);
   }, [currentUser.userID, posts.userID]);
-  return isConnected ? (
+  return isConnected || currentUser.userID === posts.userID ? (
     <div className="posts-card" key={id}>
       <div className="post-image-wrapper">
         <div className="action-container">
@@ -55,11 +57,35 @@ export const PostCard = ({ posts, id, getEditPost }) => {
         </div>
       </div>
       <p className="status">{posts.status}</p>
+      {posts.postImage ? (
+        <img
+          onClick={() => setImageModal(true)}
+          className="posts-image"
+          src={posts.postImage}
+          alt="post-image"
+        />
+      ) : (
+        <></>
+      )}
       <LikeButton
         userId={currentUser?.userID}
         postId={posts.id}
         currentUser={currentUser}
       />
+      <Modal
+        centered
+        open={imageModal}
+        onOk={() => setImageModal(false)}
+        onCancel={() => setImageModal(false)}
+        footer={[]}
+      >
+        <img
+          onClick={() => setImageModal(true)}
+          src={posts.postImage}
+          className="posts-image modal"
+          alt="post-image"
+        />
+      </Modal>
     </div>
   ) : (
     <></>

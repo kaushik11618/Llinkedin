@@ -5,6 +5,7 @@ import { PostCard } from "../PostCard.js";
 import moment from "moment/moment";
 import { v4 as uuidv4 } from "uuid";
 import "./index.css";
+import { uploadPostImage } from "../../api/ImageUpload";
 
 export const getcurrentTimeStamp = (timeFormat) => {
   return moment().format(timeFormat);
@@ -20,6 +21,7 @@ const PostStatus = ({ currentUser }) => {
   const [allStatuses, setAllStatuses] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const [postImage, setPostImage] = useState("");
   const sendStatus = async () => {
     let object = {
       status: status,
@@ -28,6 +30,7 @@ const PostStatus = ({ currentUser }) => {
       userName: currentUser.name,
       postID: getUniqueID(),
       userID: currentUser.userID,
+      postImage: postImage,
     };
     await postStatus(object);
     await setModalOpen(false);
@@ -40,9 +43,8 @@ const PostStatus = ({ currentUser }) => {
     setCurrentPost(posts);
     setIsEdit(true);
   };
-
   const updateStatus = () => {
-    updatePost(currentPost.id, status);
+    updatePost(currentPost.id, status, postImage);
     setModalOpen(false);
   };
   useEffect(() => {
@@ -50,11 +52,6 @@ const PostStatus = ({ currentUser }) => {
   }, []);
   return (
     <div className="post-status-main">
-      <div className="user-details">
-        <img src={currentUser?.imageLink} alt="imageLink" />
-        <p className="name">{currentUser?.name}</p>
-        <p className="headline">{currentUser?.headline}</p>
-      </div>
       <div className="post-status">
         <img
           className="post-image"
@@ -79,6 +76,11 @@ const PostStatus = ({ currentUser }) => {
         sendStatus={sendStatus}
         isEdit={isEdit}
         updateStatus={updateStatus}
+        uploadPostImage={uploadPostImage}
+        setPostImage={setPostImage}
+        postImage={postImage}
+        setCurrentPost={setCurrentPost}
+        currentPost={currentPost}
       />
       <div>
         {allStatuses.map((posts) => {

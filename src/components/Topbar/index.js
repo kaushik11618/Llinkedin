@@ -24,7 +24,7 @@ const Topbar = ({ currentUser }) => {
   };
   const goToRoute = (route) => {
     navigate(route);
-  };
+  };  
   const handleSearch = () => {
     if (searchInput !== "") {
       let searched = users.filter((user) => {
