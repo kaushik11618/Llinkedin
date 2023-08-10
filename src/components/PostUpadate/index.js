@@ -1,11 +1,11 @@
+import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { getStatus, postStatus, updatePost } from "../../api/firestoreApi";
+import { uploadPostImage } from "../../api/ImageUpload";
 import ModalComponent from "../Modal";
 import { PostCard } from "../PostCard.js";
-import moment from "moment/moment";
-import { v4 as uuidv4 } from "uuid";
 import "./index.css";
-import { uploadPostImage } from "../../api/ImageUpload";
 
 export const getcurrentTimeStamp = (timeFormat) => {
   return moment().format(timeFormat);

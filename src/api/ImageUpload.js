@@ -64,7 +64,7 @@ export const uploadBackGroundImage = (
   setProgress,
   setCurrentImage
 ) => {
-  const profilePicsRef = ref(storage, `postImages/${file.name}`);
+  const profilePicsRef = ref(storage, `BackGoundImage/${file.name}`);
   const uploadTask = uploadBytesResumable(profilePicsRef, file);
 
   uploadTask.on(
@@ -74,7 +74,7 @@ export const uploadBackGroundImage = (
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       );
 
-      setProgress(progress);
+      console.log(progress);
     },
     (error) => {
       console.error(error);

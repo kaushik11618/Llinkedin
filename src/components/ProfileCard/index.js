@@ -1,11 +1,13 @@
-import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { getSingleStatus, getSingleUser } from "../../api/firestoreApi.js";
-import { uploadImage as uploadImageAPI } from "../../api/ImageUpload";
-import { uploadBackGroundImage as uploadBackGroundImageAPI } from "../../api/ImageUpload";
-import { FileUploadModal } from "../FileUploadModal/index.js";
+import {
+  uploadBackGroundImage,
+  uploadImage as uploadImageAPI,
+} from "../../api/ImageUpload";
+import { BackgroundModal } from "../BackgroundModal";
+import { FileUploadModal } from "../FileUploadModal";
 import { PostCard } from "../PostCard.js";
 import "./index.css";
 export const ProfileCard = ({ currentUser, onEdit }) => {
@@ -13,10 +15,15 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
   const [allStatuses, setAllStatuses] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
   const [currentImage, setCurrentImage] = useState({});
+  const [currentImage1, setCurrentImage1] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen1, setModalOpen1] = useState(false);
   const [progress, setProgress] = useState("");
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
+  };
+  const getBackgroundImage = (event) => {
+    setCurrentImage1(event.target.files[0]);
   };
   const uploadImage = () => {
     uploadImageAPI(
@@ -27,15 +34,14 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
       setCurrentImage
     );
   };
-  const uploadBackGroundImage = () => {
-    uploadBackGroundImageAPI(
-      currentImage,
+  const BackgroundImage = () => {
+    uploadBackGroundImage(
+      currentImage1,
       currentUser.userID,
       setModalOpen,
       setProgress,
-      setCurrentImage
+      setCurrentImage1
     );
-    console.log("hello");
   };
   useEffect(() => {
     if (location?.state?.id) {
@@ -45,33 +51,35 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
       getSingleUser(setCurrentProfile, location?.state?.email);
     }
   }, [location?.state?.email, location?.state?.id]);
-
+  console.log();
   return (
     <>
       <div className="profile-card">
         <div className="edit-btn">
           <HiOutlinePencil className="edit-icon" onClick={onEdit} />
         </div>
-        <FileUploadModal
-          getImage={getImage}
-          uploadBackGroundImage={uploadBackGroundImage}
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-          currentImage={currentImage}
+        <BackgroundModal
+          modalOpen1={modalOpen1}
+          setModalOpen1={setModalOpen1}
           progress={progress}
+          BackgroundImage={BackgroundImage}
+          getBackgroundImage={getBackgroundImage}
+          currentImage1={currentImage1}
         />
-        <img
-          className="background-image"
-          onClick={() => {
-            setModalOpen(true);
-          }}
-          src={
-            Object.values(currentProfile).length === 0
-              ? currentUser.imageLink
-              : currentProfile?.imageLink
-          }
-          alt=""
-        />
+        {currentUser?.BackgroundImage?.length > 0 ? (
+          <img src="linkedinlogo.png" />
+        ) : (
+          <>
+            <img
+              className="background"
+              onClick={() => {
+                setModalOpen1(true);
+              }}
+              src={currentUser.BackGoundImageLink}
+              alt="profile-image"
+            />
+          </>
+        )}
         <div className="profile-info">
           <div>
             <FileUploadModal

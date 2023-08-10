@@ -41,13 +41,7 @@
   gap: 10px;
   position: relative;
 }
-.post-image {
-  display: flex;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+
 .action-container {
   position: absolute;
   right: 20px;

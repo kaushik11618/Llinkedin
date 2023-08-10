@@ -1,15 +1,15 @@
+import Modal from "antd/es/modal/Modal";
 import React, { useEffect, useMemo, useState } from "react";
+import { BsPencil, BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import {
   deletePost,
   getAllUsers,
   getConnections,
-  getCurrentUser,
+  getCurrentUser
 } from "../../api/firestoreApi";
 import { LikeButton } from "../LikeButton";
-import { BsPencil, BsTrash } from "react-icons/bs";
 import "./index.css";
-import Modal from "antd/es/modal/Modal";
 export const PostCard = ({ posts, id, getEditPost }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});

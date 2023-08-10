@@ -10,12 +10,12 @@
   align-items: center;
   margin-left: 50px;
 }
-.user-detail-left img {
+.profile-images {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
-  margin-top: -10px;
+  margin-top: -60px;
   border: 1px solid #b7b7b7;
   padding: 1px;
 }
@@ -39,4 +39,9 @@
   margin-top: -60px;
   border: 1px solid #b7b7b7;
   padding: 1px;
+}
+.background-images{
+  object-fit: cover;
+  width: 100%;
+  height: 100px;
 }
