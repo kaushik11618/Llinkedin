@@ -67,8 +67,6 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
           currentImage1={currentImage1}
         />
         {currentUser?.BackgroundImage?.length > 0 ? (
-          <img src="linkedinlogo.png" />
-        ) : (
           <>
             <img
               className="background"
@@ -79,6 +77,8 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
               alt="profile-image"
             />
           </>
+        ) : (
+          <img src="linkedinlogo.png" className="background" />
         )}
         <div className="profile-info">
           <div>
@@ -97,7 +97,7 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
               }}
               src={
                 Object.values(currentProfile).length === 0
-                  ? currentUser.imageLink
+                  ? currentUser.imageLink || "linkedinlog.png"
                   : currentProfile?.imageLink
               }
               alt="profile-image"
@@ -109,25 +109,28 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
             </h3>
             <p className="heading">
               {Object.values(currentProfile).length === 0
-                ? currentUser.headline
-                : currentProfile?.headline}
+                ? currentUser.headline || ""
+                : currentProfile?.headline || ""}
             </p>
             <p className="location">
               {Object.values(currentProfile).length === 0
-                ? `${currentUser.city}, ${currentUser.country} `
-                : `${currentProfile?.city}, ${currentUser.country}`}
+                ? `${currentUser.city || ""} ${currentUser.country || ""}` ||
+                  "Location not updated"
+                : `${currentProfile?.city || ""}, ${
+                    currentUser.country || ""
+                  }` || "Location not updated"}
             </p>
             <a
               className="website"
               target="_blank"
               href={
                 Object.values(currentProfile).length === 0
-                  ? `${currentUser.website}`
-                  : currentProfile?.website
+                  ? `${currentUser.website || ""}`
+                  : currentProfile?.website || ""
               }
             >
               {Object.values(currentProfile).length === 0
-                ? `${currentUser.website}`
+                ? `${currentUser.website || ""}`
                 : currentProfile?.website}
             </a>
           </div>
@@ -159,7 +162,7 @@ export const ProfileCard = ({ currentUser, onEdit }) => {
       <div className="post-status-main">
         {allStatuses.map((posts) => {
           return (
-            <div key={posts.id}>
+            <div key={posts.id} style={{ justifyContent: "center" }}>
               <PostCard posts={posts} />
             </div>
           );
